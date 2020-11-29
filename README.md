@@ -41,7 +41,7 @@ FIM |
 
 
 ```javascript
-//SOLUÇAO 1
+//SOLUCAO 1
 /*Armazena a lista dos alunos em um array*/
 getsLinha = [];
 linha = gets();
