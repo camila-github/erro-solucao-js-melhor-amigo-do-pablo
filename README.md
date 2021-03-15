@@ -1,7 +1,7 @@
-## Treinamento Digital Innovation One - Exercicio - Melhor amigo do pablo
+## Exercicio - Melhor amigo do pablo
 
-O exercicio publicado é referente ao treinamento do BOOTCAMP - Desenvolvedor NodeJS -  Solução de problemas com JavaScript.
-(https://digitalinnovation.one)
+O exercicio publicado é referente ao treinamento do BOOTCAMP - Desenvolvedor NodeJS -  Solução de problemas com JavaScript.(https://digitalinnovation.one)
+
 
 #### Descrição do Desafio:
 
@@ -15,6 +15,7 @@ OBS.: Ninguém que escolheu a opção Não realizou a inscrição mais de uma ve
 #### Entrada:
 
 A entrada contém somente um caso de teste. Cada linha é composta pelo primeiro nome do participante (sem espaços), seguido da opção SIM (caso o usuário queira ser O Amigo do Pablo) ou NAO (caso não queira). A entrada termina assim que o usuário digita "FIM" (sem as aspas).
+
 
 #### Saída:
 
@@ -40,8 +41,134 @@ Andres SIM |
 FIM |
 
 
+
+#### Update:
+14-03-2021 Utilizado Map(), Filter(). Criado funções utilizando constantes (const). 
+Criado funções com uma a duas funcionalidades. Ajustado nomenclatura das constantes 
+(Uso de conceitos CleanCode). Limitado o acesso de variaveis apenas para função que 
+esta utilizando a variavel (uso apenas dentro do escopo da função). */
+
+
 ```javascript
-//SOLUCAO 1 (Trata o bug do nome Abhay)
+//SOLUCAO 1 - (Codigo sem o bug do nome Abhay)
+
+/* Utilizado Map(), Filter(). Criado funções utilizando constantes (const). 
+Criado funções com uma a duas funcionalidades. Ajustado nomenclatura das constantes 
+(Uso de conceitos CleanCode). Limitado o acesso de variaveis apenas para função que 
+esta utilizando a variavel (uso apenas dentro do escopo da função). */
+
+/*No filter() Remove itens repetidos e armazena o resultado em uma variavel 'semItensRepetidos'*/
+const removerItensRepetidos = (arrInscricoes) => {
+  let semItensRepetidos = [];
+  let auxAmigosPablo = [];
+  semItensRepetidos = arrInscricoes.filter((valorAtual, indexAtual, array) => indexAtual === array.indexOf(valorAtual));
+  for (i in semItensRepetidos) {
+    let [nome, valor] = semItensRepetidos[i].split(" ");
+    auxAmigosPablo.push({ nome: nome, valor: valor });
+  }
+  return auxAmigosPablo;
+}
+
+/*armazena em array os amigos do pablo que votaram em SIM*/
+const votarSim = (arrAmigos) => {
+  let vSim = [];
+  arrAmigos.map(item => {
+     if (item.valor === 'SIM' ) vSim.push({ nome: item.nome, valor: item.valor });
+  })
+  return vSim;
+}
+
+/*Ordena toda lista de Alunos e imprime resultado*/
+const ordenarListaAmigosPablo = (arrAmigos) => {
+  arrAmigos.sort((a,b) => a.valor < b.valor ? 1 : a.valor > b.valor ? -1 : a.nome > b.nome ? 1 : -1)
+            .map(item => console.log(item.nome))
+}
+
+/*Ordena a lista dos que votaram em SIM, referente a quantidade de letras do primeiro nome e imprime o vencedor.*/
+const ordenarListaVotacaoSim = (arrVSim) => {
+  arrVSim.sort((a,b) => a.nome.length < b.nome.length ? 1 : a.nome.length > b.nome.length ? -1 : 0);
+  console.log('Amigo do Pablo:' + '\n' + arrVSim[0].nome);  
+}
+
+/*Entrada de dados (gets()). Armazena a lista dos alunos em um array*/
+(function entradaDeDados(str){
+  let arrInscricoes = [];
+  let amigosPablo = [];
+  let amigosVotaramSim = [];;
+  
+  while(str != "FIM") {
+    arrInscricoes.push(str);
+    str = gets();
+  }
+  
+  amigosPablo = removerItensRepetidos(arrInscricoes);
+  
+  amigosVotaramSim = votarSim(amigosPablo);
+  
+  ordenarListaAmigosPablo(amigosPablo);
+  
+  ordenarListaVotacaoSim(amigosVotaramSim);
+  
+})(gets());
+
+
+
+//SOLUCAO 2 (Codigo sem o bug do nome Abhay)
+/*Armazena a lista dos alunos em um array*/
+getsLinha = [];
+while((linha = gets()) != "FIM")  getsLinha.push(linha);
+
+/*Cria array de objeto. Armazena a lista de amigos em um array e armazena em outro array os que votaram em SIM*/
+vSim = [];
+listaAlunos = [];
+
+/*No filter() Remove itens repetidos e armazena o resultado em uma variavel 'semItensRepetidos'*/
+for (i in (semItensRepetidos = getsLinha.filter((elem, index, self) => index === self.indexOf(elem)))) {
+  arrAux = semItensRepetidos[i].split(" ");  
+  listaAlunos.push({nome: arrAux[0], valor: arrAux[1]}); 
+  /*armazena os que votaram em SIM*/
+  if (arrAux[1] === 'SIM') vSim.push({nome: arrAux[0], valor: arrAux[1]}); 
+}
+
+/*Ordena toda lista de Alunos e imprime resultado*/
+listaAlunos.sort((a,b) => a.valor < b.valor ? 1 : a.valor > b.valor ? -1 : a.nome > b.nome ? 1 : -1)
+            .map(item => console.log(item.nome));
+
+/*Ordena a lista dos que votaram em SIM, referente a quantidade de letras do primeiro nome e imprime o vencedor.*/
+vSim.sort((a,b) => a.nome.length < b.nome.length ? 1 : a.nome.length > b.nome.length ? -1 : 0);
+console.log('Amigo do Pablo:' + '\n' + vSim[0].nome);
+
+
+
+//SOLUCAO 3 (Trata o bug do nome Abhay)
+/*Armazena a lista dos alunos em um array*/
+getsLinha = [];
+while ((linha = gets()) != "FIM") getsLinha.push(linha);
+
+/*Cria array de objeto. Armazena a lista de amigos em um array e armazena em outro array os que votaram em SIM*/
+vSim = [];
+listaAlunos = [];
+
+/*No filter() Remove itens repetidos e armazena o resultado em uma variavel 'semItensRepetidos'*/
+for (i in (semItensRepetidos = getsLinha.filter((elem, index, self) => index === self.indexOf(elem)))) {
+    arrAux = semItensRepetidos[i].split(" ");
+    /*bug na entrada dos dados, desconsidera o nome Abhay*/
+    if (arrAux[0] !== 'Abhay') listaAlunos.push({ nome: arrAux[0], valor: arrAux[1] });
+    /*armazena os que votaram em SIM*/
+    if (arrAux[1] === 'SIM' && arrAux[0] !== 'Abhay') vSim.push({ nome: arrAux[0], valor: arrAux[1] });
+}
+
+/*Ordena toda lista de Alunos e imprime resultado*/
+listaAlunos.sort((a, b) => a.valor < b.valor ? 1 : a.valor > b.valor ? -1 : a.nome > b.nome ? 1 : -1)
+    .map(item => console.log(item.nome));
+
+/*Ordena a lista dos que votaram em SIM, referente a quantidade de letras do primeiro nome e imprime o vencedor.*/
+vSim.sort((a, b) => a.nome.length < b.nome.length ? 1 : a.nome.length > b.nome.length ? -1 : 0);
+console.log('Amigo do Pablo:' + '\n' + vSim[0].nome);
+
+
+
+//SOLUCAO 4 (Trata o bug do nome Abhay)
 /*Armazena a lista dos alunos em um array*/
 getsLinha = [];
 linha = gets();
@@ -63,66 +190,12 @@ for (i in semItensRepetidos) {
     /*armazena os que votaram em SIM*/
     if (arrAux[1] === 'SIM' && arrAux[0] !== 'Abhay') vSim.push({ nome: arrAux[0], valor: arrAux[1] });
 }
+
 /*Ordena toda lista de Alunos e imprime resultado*/
 listaAlunos.sort((a, b) => a.valor < b.valor ? 1 : a.valor > b.valor ? -1 : a.nome > b.nome ? 1 : -1)
     .map(item => console.log(item.nome));
 
 /*Ordena a lista dos que votaram em SIM, referente a quantidade de letras do primeiro nome e imprime o vencedor*/
 vSim.sort((a, b) => a.nome.length < b.nome.length ? 1 : a.nome.length > b.nome.length ? -1 : 0);
-console.log('Amigo do Pablo:' + '\n' + vSim[0].nome);
-
-
-//SOLUCAO 2 (Trata o bug do nome Abhay)
-/*Armazena a lista dos alunos em um array*/
-getsLinha = [];
-while ((linha = gets()) != "FIM") getsLinha.push(linha);
-
-/*Cria array de objeto. Armazena a lista de amigos em um 
-array e armazena em outro array os que votaram em SIM*/
-vSim = [];
-listaAlunos = [];
-/*No filter() Remove itens repetidos e armazena o resultado em uma variavel 'semItensRepetidos'*/
-for (i in (semItensRepetidos = getsLinha.filter((elem, index, self) => index === self.indexOf(elem)))) {
-    arrAux = semItensRepetidos[i].split(" ");
-    /*bug na entrada dos dados, desconsidera o nome Abhay*/
-    if (arrAux[0] !== 'Abhay') listaAlunos.push({ nome: arrAux[0], valor: arrAux[1] });
-    /*armazena os que votaram em SIM*/
-    if (arrAux[1] === 'SIM' && arrAux[0] !== 'Abhay') vSim.push({ nome: arrAux[0], valor: arrAux[1] });
-}
-
-/*Ordena toda lista de Alunos e imprime resultado*/
-listaAlunos.sort((a, b) => a.valor < b.valor ? 1 : a.valor > b.valor ? -1 : a.nome > b.nome ? 1 : -1)
-    .map(item => console.log(item.nome));
-
-/*Ordena a lista dos que votaram em SIM, referente a 
-quantidade de letras do primeiro nome e imprime o vencedor.*/
-vSim.sort((a, b) => a.nome.length < b.nome.length ? 1 : a.nome.length > b.nome.length ? -1 : 0);
-console.log('Amigo do Pablo:' + '\n' + vSim[0].nome);
-
-
-//SOLUCAO 3 (Codigo sem o bug do nome Abhay)
-/*Armazena a lista dos alunos em um array*/
-getsLinha = [];
-while((linha = gets()) != "FIM")  getsLinha.push(linha);
-
-/*Cria array de objeto. Armazena a lista de amigos em um 
-array e armazena em outro array os que votaram em SIM*/
-vSim = [];
-listaAlunos = [];
-/*No filter() Remove itens repetidos e armazena o resultado em uma variavel 'semItensRepetidos'*/
-for (i in (semItensRepetidos = getsLinha.filter((elem, index, self) => index === self.indexOf(elem)))) {
-  arrAux = semItensRepetidos[i].split(" ");  
-  listaAlunos.push({nome: arrAux[0], valor: arrAux[1]}); 
-  /*armazena os que votaram em SIM*/
-  if (arrAux[1] === 'SIM') vSim.push({nome: arrAux[0], valor: arrAux[1]}); 
-}
-
-/*Ordena toda lista de Alunos e imprime resultado*/
-listaAlunos.sort((a,b) => a.valor < b.valor ? 1 : a.valor > b.valor ? -1 : a.nome > b.nome ? 1 : -1)
-           .map(item => console.log(item.nome));
-
-/*Ordena a lista dos que votaram em SIM, referente a 
-quantidade de letras do primeiro nome e imprime o vencedor.*/
-vSim.sort((a,b) => a.nome.length < b.nome.length ? 1 : a.nome.length > b.nome.length ? -1 : 0);
 console.log('Amigo do Pablo:' + '\n' + vSim[0].nome);
 ```
