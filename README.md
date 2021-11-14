@@ -1,6 +1,6 @@
 ## Exercicio - Melhor amigo do pablo
 
-O exercicio publicado é referente ao treinamento do BOOTCAMP - Desenvolvedor NodeJS -  Solução de problemas com JavaScript.(https://digitalinnovation.one)
+O exercicio publicado é referente ao treinamento do BOOTCAMP - Desenvolvedor NodeJS -  Solução de problemas com JavaScript. [https://digitalinnovation.one](https://digitalinnovation.one)
 
 
 #### Descrição do Desafio:
